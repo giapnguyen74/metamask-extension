@@ -56,6 +56,9 @@ const EthQuery = require('eth-query')
 const ethUtil = require('ethereumjs-util')
 const sigUtil = require('eth-sig-util')
 
+//For support vzt wallet
+const VztVaultKeyring = require("eth-vzt-vault-keyring");
+
 module.exports = class MetamaskController extends EventEmitter {
 
   /**
@@ -157,7 +160,7 @@ module.exports = class MetamaskController extends EventEmitter {
     })
 
     // key mgmt
-    const additionalKeyrings = [TrezorKeyring, LedgerBridgeKeyring]
+    const additionalKeyrings = [TrezorKeyring, LedgerBridgeKeyring, VztVaultKeyring]
     this.keyringController = new KeyringController({
       keyringTypes: additionalKeyrings,
       initState: initState.KeyringController,
@@ -640,6 +643,9 @@ module.exports = class MetamaskController extends EventEmitter {
       case 'ledger':
         keyringName = LedgerBridgeKeyring.type
         break
+      case "vzt":
+        keyringName = VztVaultKeyring.type;
+        break;  
       default:
         throw new Error('MetamaskController:getKeyringForDevice - Unknown device')
     }

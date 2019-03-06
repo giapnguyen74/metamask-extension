@@ -38,13 +38,31 @@ class ConnectScreen extends Component {
         )
     }
 
+    renderConnectToVeriVaultButton() {
+        return h(
+          `button.hw-connect__btn${this.state.selectedDevice === "vzt" ? ".selected" : ""}`,
+          {
+            onClick: _ => this.setState({ selectedDevice: "vzt" })
+          },
+          h("img.hw-connect__btn__img", {
+            src: "images/vzt-logo.png"
+          })
+        );
+    }
+
     renderButtons () {
       return (
         h('div', {}, [
           h('div.hw-connect__btn-wrapper', {}, [
             this.renderConnectToLedgerButton(),
             this.renderConnectToTrezorButton(),
+           
           ]),
+          h('div.hw-connect__btn-wrapper', {}, [
+            
+            this.renderConnectToVeriVaultButton()
+          ]),
+         
           h(Button, {
             type: 'confirm',
             large: true,
